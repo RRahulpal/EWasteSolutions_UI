@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "EWasteSolutions": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:62002;http://localhost:62003"
+    }
+  }
+}

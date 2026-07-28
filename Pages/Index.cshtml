@@ -1,0 +1,680 @@
+@page
+@model IndexModel
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="row align-items-center g-5">
+
+            <div class="col-lg-7 hero-content-animation">
+
+                <span class="eyebrow">
+                    <i class="fa-solid fa-leaf me-2"></i>
+                    Responsible technology lifecycle
+                </span>
+
+                <h1>
+                    Secure disposal. Smart refurbishment.
+                    <span>Maximum value.</span>
+                </h1>
+
+                <p class="my-4 hero-description">
+                    Professional IT asset disposal, e-waste collection,
+                    refurbishment and secure data destruction for corporates,
+                    institutions and individuals.
+                </p>
+
+                <div class="d-flex flex-column flex-sm-row flex-wrap gap-3">
+
+                    <a class="btn btn-brand btn-lg"
+                       asp-page="/Pickup/Create">
+
+                        <i class="fa-solid fa-truck-fast me-2"></i>
+                        Request Free Pickup
+
+                    </a>
+
+                    <a class="btn btn-outline-brand btn-lg"
+                       asp-page="/Products/Index">
+
+                        <i class="fa-solid fa-laptop me-2"></i>
+                        Shop Refurbished
+
+                    </a>
+
+                </div>
+
+                <div class="hero-trust-row mt-4">
+
+                    <span>
+                        <i class="fa-solid fa-circle-check"></i>
+                        Secure handling
+                    </span>
+
+                    <span>
+                        <i class="fa-solid fa-circle-check"></i>
+                        Professional service
+                    </span>
+
+                    <span>
+                        <i class="fa-solid fa-circle-check"></i>
+                        Value recovery
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-5 hero-visual hero-image-animation">
+
+                <div class="hero-card">
+
+                    <div class="hero-art">
+
+                        <img src="~/images/hero-ewaste.svg"
+                             class="img-fluid hero-main-image"
+                             alt="IT asset disposal and e-waste recycling" />
+
+                    </div>
+
+                    <div class="floating-badge badge-one floating-card">
+
+                        <i class="fa-solid fa-shield-halved text-success me-2"></i>
+
+                        <div>
+                            <strong>Secure Handling</strong>
+                            <small>Protected asset processing</small>
+                        </div>
+
+                    </div>
+
+                    <div class="floating-badge badge-two floating-card">
+
+                        <i class="fa-solid fa-leaf text-success me-2"></i>
+
+                        <div>
+                            <strong>Responsible Recycling</strong>
+                            <small>Sustainable asset lifecycle</small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Trust and Service Highlights -->
+<section class="stat-strip">
+    <div class="container">
+
+        <div class="row g-3">
+
+            <div class="col-6 col-lg-3 reveal delay-1">
+                <div class="stat-box">
+
+                    <i class="fa-solid fa-truck-fast"></i>
+
+                    <strong>Pan-India</strong>
+
+                    <span>Pickup coordination</span>
+
+                </div>
+            </div>
+
+            <div class="col-6 col-lg-3 reveal delay-2">
+                <div class="stat-box">
+
+                    <i class="fa-solid fa-hard-drive"></i>
+
+                    <strong>Secure</strong>
+
+                    <span>Data destruction</span>
+
+                </div>
+            </div>
+
+            <div class="col-6 col-lg-3 reveal delay-3">
+                <div class="stat-box">
+
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+
+                    <strong>Tested</strong>
+
+                    <span>Refurbished assets</span>
+
+                </div>
+            </div>
+
+            <div class="col-6 col-lg-3 reveal delay-4">
+                <div class="stat-box">
+
+                    <i class="fa-solid fa-recycle"></i>
+
+                    <strong>Responsible</strong>
+
+                    <span>Material recovery</span>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="section">
+    <div class="container">
+
+        <div class="section-title reveal">
+
+            <span>Our services</span>
+
+            <h2>
+                One partner for the complete IT asset lifecycle
+            </h2>
+
+            <p>
+                From collection and valuation to refurbishment,
+                data wiping and final recycling.
+            </p>
+
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-6 col-lg-3 reveal delay-1">
+
+                <a class="service-card text-decoration-none"
+                   asp-page="/Services/ITAssetDisposal">
+
+                    <div class="service-number">
+                        01
+                    </div>
+
+                    <div class="icon-box">
+                        <i class="fa-solid fa-building-shield"></i>
+                    </div>
+
+                    <h4>IT Asset Disposal</h4>
+
+                    <p>
+                        Structured disposal for obsolete laptops,
+                        desktops, servers and networking assets.
+                    </p>
+
+                    <span class="card-link">
+                        Learn more
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </span>
+
+                </a>
+
+            </div>
+
+            <div class="col-md-6 col-lg-3 reveal delay-2">
+
+                <a class="service-card text-decoration-none"
+                   asp-page="/Services/DataDestruction">
+
+                    <div class="service-number">
+                        02
+                    </div>
+
+                    <div class="icon-box">
+                        <i class="fa-solid fa-database"></i>
+                    </div>
+
+                    <h4>Data Destruction</h4>
+
+                    <p>
+                        Data wiping, degaussing and physical destruction
+                        options for storage media.
+                    </p>
+
+                    <span class="card-link">
+                        Learn more
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </span>
+
+                </a>
+
+            </div>
+
+            <div class="col-md-6 col-lg-3 reveal delay-3">
+
+                <a class="service-card text-decoration-none"
+                   asp-page="/Services/Refurbishment">
+
+                    <div class="service-number">
+                        03
+                    </div>
+
+                    <div class="icon-box">
+                        <i class="fa-solid fa-laptop-medical"></i>
+                    </div>
+
+                    <h4>Refurbishment</h4>
+
+                    <p>
+                        Inspection, repair, testing and remarketing
+                        to extend useful asset life.
+                    </p>
+
+                    <span class="card-link">
+                        Learn more
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </span>
+
+                </a>
+
+            </div>
+
+            <div class="col-md-6 col-lg-3 reveal delay-4">
+
+                <a class="service-card text-decoration-none"
+                   asp-page="/Pickup/Create">
+
+                    <div class="service-number">
+                        04
+                    </div>
+
+                    <div class="icon-box">
+                        <i class="fa-solid fa-truck"></i>
+                    </div>
+
+                    <h4>Pickup and Logistics</h4>
+
+                    <p>
+                        Convenient asset collection support for offices,
+                        institutions and bulk sellers.
+                    </p>
+
+                    <span class="card-link">
+                        Request pickup
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="text-center mt-5 reveal">
+
+            <a class="btn btn-outline-brand btn-lg"
+               asp-page="/Services/Index">
+
+                View All Services
+                <i class="fa-solid fa-arrow-right ms-2"></i>
+
+            </a>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- Security and Refurbishment Section -->
+<section class="section bg-soft">
+    <div class="container">
+
+        <div class="row align-items-center g-5">
+
+            <div class="col-lg-6 reveal-left">
+
+                <div class="image-panel">
+
+                    <img src="~/images/sections/data-security.svg"
+                         class="img-fluid"
+                         alt="Secure data destruction process" />
+
+                    <div class="image-label">
+
+                        <i class="fa-solid fa-lock"></i>
+
+                        Data-first asset handling
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-6 reveal-right">
+
+                <span class="eyebrow">
+                    Built for business security
+                </span>
+
+                <h2 class="display-heading">
+                    Protect sensitive data before assets leave your control
+                </h2>
+
+                <p class="lead text-muted">
+                    Storage devices may contain confidential company,
+                    employee and customer information. We support secure
+                    handling and appropriate data destruction options.
+                </p>
+
+                <div class="feature-list">
+
+                    <div class="feature-item">
+                        <i class="fa-solid fa-circle-check"></i>
+
+                        <div>
+                            <strong>Data wiping</strong>
+                            <p>Logical sanitization for reusable storage devices.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <i class="fa-solid fa-circle-check"></i>
+
+                        <div>
+                            <strong>Physical destruction</strong>
+                            <p>Destruction options for non-reusable media.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <i class="fa-solid fa-circle-check"></i>
+
+                        <div>
+                            <strong>Controlled handling</strong>
+                            <p>Structured processing throughout the asset lifecycle.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <a class="btn btn-brand mt-3"
+                   asp-page="/Services/DataDestruction">
+
+                    Explore Data Destruction
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- Process Section -->
+<section class="section">
+    <div class="container">
+
+        <div class="section-title reveal">
+
+            <span>Simple process</span>
+
+            <h2>How it works</h2>
+
+            <p>
+                A simple four-step process to manage your obsolete
+                IT equipment responsibly.
+            </p>
+
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-6 col-lg-3 reveal delay-1">
+
+                <div class="process-card">
+
+                    <div class="process-number">
+                        1
+                    </div>
+
+                    <div class="process-icon">
+                        <i class="fa-solid fa-list-check"></i>
+                    </div>
+
+                    <h4>Share Details</h4>
+
+                    <p>
+                        Tell us the asset types, quantity,
+                        condition and pickup location.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-6 col-lg-3 reveal delay-2">
+
+                <div class="process-card">
+
+                    <div class="process-number">
+                        2
+                    </div>
+
+                    <div class="process-icon">
+                        <i class="fa-solid fa-magnifying-glass-chart"></i>
+                    </div>
+
+                    <h4>Get Assessment</h4>
+
+                    <p>
+                        Our team reviews the information and discusses
+                        valuation or the required service scope.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-6 col-lg-3 reveal delay-3">
+
+                <div class="process-card">
+
+                    <div class="process-number">
+                        3
+                    </div>
+
+                    <div class="process-icon">
+                        <i class="fa-solid fa-calendar-check"></i>
+                    </div>
+
+                    <h4>Schedule Pickup</h4>
+
+                    <p>
+                        Choose a convenient collection date
+                        for safe asset transportation.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-6 col-lg-3 reveal delay-4">
+
+                <div class="process-card">
+
+                    <div class="process-number">
+                        4
+                    </div>
+
+                    <div class="process-icon">
+                        <i class="fa-solid fa-recycle"></i>
+                    </div>
+
+                    <h4>Process Assets</h4>
+
+                    <p>
+                        Assets are sorted for reuse, refurbishment,
+                        data destruction or recycling.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- Product Preview Section -->
+<section class="section bg-soft">
+    <div class="container">
+
+        <div class="section-title reveal">
+
+            <span>Refurbished technology</span>
+
+            <h2>Give reliable hardware a second life</h2>
+
+            <p>
+                Explore inspected and tested refurbished IT products
+                for individuals, offices and institutions.
+            </p>
+
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-4 reveal-zoom delay-1">
+
+                <div class="mini-product-card">
+
+                    <img src="~/images/products/laptop.svg"
+                         class="img-fluid"
+                         alt="Refurbished laptop" />
+
+                    <div class="mini-product-content">
+
+                        <span>Refurbished</span>
+
+                        <h4>Laptops</h4>
+
+                        <p>
+                            Business laptops for professional and personal use.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4 reveal-zoom delay-2">
+
+                <div class="mini-product-card">
+
+                    <img src="~/images/products/desktop.svg"
+                         class="img-fluid"
+                         alt="Refurbished desktop computer" />
+
+                    <div class="mini-product-content">
+
+                        <span>Refurbished</span>
+
+                        <h4>Desktops</h4>
+
+                        <p>
+                            Reliable desktop systems for offices and institutions.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4 reveal-zoom delay-3">
+
+                <div class="mini-product-card">
+
+                    <img src="~/images/products/monitor.svg"
+                         class="img-fluid"
+                         alt="Refurbished computer monitor" />
+
+                    <div class="mini-product-content">
+
+                        <span>Accessories</span>
+
+                        <h4>Monitors and Accessories</h4>
+
+                        <p>
+                            Tested displays, keyboards, storage and related hardware.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="text-center mt-5 reveal">
+
+            <a class="btn btn-brand btn-lg"
+               asp-page="/Products/Index">
+
+                <i class="fa-solid fa-bag-shopping me-2"></i>
+                Explore Refurbished Products
+
+            </a>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section">
+    <div class="container">
+
+        <div class="cta-panel reveal">
+
+            <div class="row align-items-center g-4">
+
+                <div class="col-lg-8">
+
+                    <span class="cta-label">
+                        Start your asset disposal request
+                    </span>
+
+                    <h2>
+                        Have obsolete IT hardware or electronic waste?
+                    </h2>
+
+                    <p class="mb-lg-0">
+                        Send the asset details through WhatsApp and receive
+                        a quick response from our team.
+                    </p>
+
+                </div>
+
+                <div class="col-lg-4 text-lg-end">
+
+                    <a class="btn btn-light btn-lg fw-bold"
+                       asp-page="/Pickup/Create">
+
+                        <i class="fa-solid fa-truck-fast me-2"></i>
+                        Request Pickup
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
