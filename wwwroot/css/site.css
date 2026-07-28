@@ -1404,3 +1404,129 @@ body {
         left: 15px;
     }
 }
+/* =========================================================
+   HOME PAGE SERVICE CARDS - ALIGNMENT FIX
+========================================================= */
+
+.service-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    min-height: 360px;
+    padding: 30px;
+    overflow: hidden;
+    color: var(--text);
+    background: #ffffff;
+    border: 1px solid #e3ece8;
+    border-radius: 22px;
+    box-shadow: 0 10px 30px rgba(16, 42, 67, 0.06);
+    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+    /* Prevent anchor text from becoming browser blue */
+    .service-card,
+    .service-card:hover,
+    .service-card:focus,
+    .service-card:active {
+        color: var(--text);
+        text-decoration: none;
+    }
+
+/* Number in top-right corner */
+.service-number {
+    position: absolute;
+    top: 22px;
+    right: 24px;
+    color: rgba(18, 128, 92, 0.18);
+    font-family: "Poppins", sans-serif;
+    font-size: 2.6rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+/* Icon */
+.service-card .icon-box {
+    flex-shrink: 0;
+    margin-bottom: 24px;
+}
+
+/* Heading */
+.service-card h4 {
+    min-height: 58px;
+    margin-bottom: 14px;
+    color: var(--navy);
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+/* Description */
+.service-card p {
+    flex-grow: 1;
+    margin-bottom: 24px;
+    color: var(--muted);
+    font-size: 0.96rem;
+    line-height: 1.75;
+}
+
+/* Bottom link */
+.service-card .card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: auto;
+    color: var(--green);
+    font-weight: 700;
+}
+
+    /* Link arrow animation */
+    .service-card .card-link i {
+        transition: transform 0.3s ease;
+    }
+
+/* Hover */
+.service-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(18, 128, 92, 0.3);
+    box-shadow: 0 22px 45px rgba(15, 70, 55, 0.14);
+}
+
+    .service-card:hover .card-link i {
+        transform: translateX(6px);
+    }
+
+/* Keep columns equal height */
+.service-section-row {
+    align-items: stretch;
+}
+
+    .service-section-row > div {
+        display: flex;
+    }
+
+/* Tablet */
+@media (max-width: 991.98px) {
+    .service-card {
+        min-height: 330px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 575.98px) {
+    .service-card {
+        min-height: auto;
+        padding: 25px;
+    }
+
+        .service-card h4 {
+            min-height: auto;
+        }
+
+    .service-number {
+        top: 20px;
+        right: 20px;
+        font-size: 2.2rem;
+    }
+}
