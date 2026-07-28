@@ -772,26 +772,7 @@ body {
         backdrop-filter: blur(12px);
     }
 
-    /* Animated navigation underline */
-    .site-navbar .nav-link {
-        position: relative;
-    }
-
-        .site-navbar .nav-link::after {
-            content: "";
-            position: absolute;
-            left: 50%;
-            bottom: 3px;
-            width: 0;
-            height: 2px;
-            background: var(--green, #12805c);
-            transform: translateX(-50%);
-            transition: width 0.3s ease;
-        }
-
-        .site-navbar .nav-link:hover::after {
-            width: 70%;
-        }
+   
 
 /* ---------------------------------------------------------
    Button animation
@@ -1528,5 +1509,201 @@ body {
         top: 20px;
         right: 20px;
         font-size: 2.2rem;
+    }
+}
+/* =========================================================
+   NAVBAR ACTIVE PAGE AND DROPDOWN FIX
+========================================================= */
+
+.site-navbar {
+    min-height: 78px;
+}
+
+    .site-navbar .navbar-nav {
+        gap: 4px;
+    }
+
+    .site-navbar .nav-item {
+        position: relative;
+    }
+
+    /* Standard navigation links */
+
+    .site-navbar .navbar-page-link {
+        position: relative;
+        padding: 12px 14px !important;
+        color: var(--navy) !important;
+        border-radius: 10px;
+        transition: color 0.3s ease, background-color 0.3s ease;
+    }
+
+        /* Custom underline only for normal links */
+        /* This deliberately does not target dropdown-toggle */
+
+        .site-navbar .navbar-page-link::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 4px;
+            width: 0;
+            height: 3px;
+            background: var(--green);
+            border-radius: 20px;
+            transform: translateX(-50%);
+            transition: width 0.3s ease;
+        }
+
+        .site-navbar .navbar-page-link:hover {
+            color: var(--green) !important;
+            background-color: rgba(18, 128, 92, 0.06);
+        }
+
+            .site-navbar .navbar-page-link:hover::before {
+                width: 55%;
+            }
+
+        /* Current active page */
+
+        .site-navbar .navbar-page-link.active {
+            color: var(--green) !important;
+            background-color: rgba(18, 128, 92, 0.09);
+        }
+
+            .site-navbar .navbar-page-link.active::before {
+                width: 55%;
+            }
+
+    /* =========================================================
+   SERVICES DROPDOWN
+========================================================= */
+
+    .site-navbar .dropdown-toggle {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        padding: 12px 14px !important;
+        color: var(--navy) !important;
+        border-radius: 10px;
+        transition: color 0.3s ease, background-color 0.3s ease;
+    }
+
+        .site-navbar .dropdown-toggle:hover,
+        .site-navbar .dropdown-toggle.active,
+        .site-navbar .dropdown-toggle.show {
+            color: var(--green) !important;
+            background-color: rgba(18, 128, 92, 0.09);
+        }
+
+        /* Restore and improve Bootstrap dropdown caret */
+
+        .site-navbar .dropdown-toggle::after {
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            margin-left: 2px;
+            border: 0;
+            border-right: 2px solid currentColor;
+            border-bottom: 2px solid currentColor;
+            transform: rotate(45deg) translateY(-2px);
+            transition: transform 0.25s ease;
+        }
+
+        /* Rotate caret while dropdown is open */
+
+        .site-navbar .dropdown-toggle.show::after {
+            transform: rotate(225deg) translate(-2px, -1px);
+        }
+
+    /* Dropdown container */
+
+    .site-navbar .dropdown-menu {
+        min-width: 245px;
+        margin-top: 12px !important;
+        padding: 10px;
+        border: 1px solid rgba(18, 128, 92, 0.1) !important;
+        border-radius: 16px;
+        box-shadow: 0 18px 45px rgba(16, 42, 67, 0.14) !important;
+    }
+
+    /* Dropdown links */
+
+    .site-navbar .dropdown-item {
+        padding: 11px 14px;
+        color: var(--navy);
+        border-radius: 10px;
+        font-weight: 600;
+        transition: color 0.25s ease, background-color 0.25s ease, padding-left 0.25s ease;
+    }
+
+        .site-navbar .dropdown-item:hover {
+            padding-left: 18px;
+            color: var(--green);
+            background-color: rgba(18, 128, 92, 0.08);
+        }
+
+        .site-navbar .dropdown-item.active,
+        .site-navbar .dropdown-item:active {
+            color: #ffffff;
+            background-color: var(--green);
+        }
+
+/* =========================================================
+   PICKUP BUTTON ACTIVE STATE
+========================================================= */
+
+.pickup-nav-btn {
+    white-space: nowrap;
+}
+
+    .pickup-nav-btn.active {
+        color: #ffffff;
+        background: var(--green-dark);
+        box-shadow: 0 0 0 4px rgba(18, 128, 92, 0.14), 0 12px 28px rgba(18, 128, 92, 0.26);
+    }
+
+/* =========================================================
+   MOBILE NAVBAR
+========================================================= */
+
+@media (max-width: 991.98px) {
+
+    .site-navbar .navbar-nav {
+        align-items: stretch !important;
+        gap: 5px;
+    }
+
+    .site-navbar .navbar-page-link,
+    .site-navbar .dropdown-toggle {
+        width: 100%;
+        padding: 12px 14px !important;
+    }
+
+        .site-navbar .navbar-page-link::before {
+            left: 14px;
+            bottom: 4px;
+            transform: none;
+        }
+
+        .site-navbar .navbar-page-link:hover::before,
+        .site-navbar .navbar-page-link.active::before {
+            width: 35px;
+        }
+
+    .site-navbar .dropdown-toggle {
+        justify-content: space-between;
+    }
+
+    .site-navbar .dropdown-menu {
+        margin-top: 5px !important;
+        margin-left: 12px;
+        box-shadow: none !important;
+    }
+
+    .pickup-nav-btn {
+        display: block;
+        width: 100%;
+        margin-top: 8px;
+        text-align: center;
     }
 }
