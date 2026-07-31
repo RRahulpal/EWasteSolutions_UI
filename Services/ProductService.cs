@@ -37,9 +37,9 @@ namespace EWasteSolutions.Services
         public async Task<Product?> GetByIdAsync(int id)
         {
             return await _context.Products
-                .Include(p => p.Category)
-                .Include(p => p.ProductImages)
-                .FirstOrDefaultAsync(p => p.Id == id);
+                .Include(product => product.Category)
+                .Include(product => product.ProductImages)
+                .FirstOrDefaultAsync(product => product.Id == id);
         }
 
         public async Task CreateAsync(Product product)

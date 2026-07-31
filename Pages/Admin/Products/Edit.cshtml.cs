@@ -13,15 +13,18 @@ namespace EWasteSolutions.Pages.Admin.Products
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
         private readonly IImageService _imageService;
+        private readonly ILogger<EditModel> _logger;
 
         public EditModel(
             IProductService productService,
             ICategoryService categoryService,
-            IImageService imageService)
+            IImageService imageService,
+            ILogger<EditModel> logger)
         {
             _productService = productService;
             _categoryService = categoryService;
             _imageService = imageService;
+            _logger = logger;
         }
 
         [BindProperty]
@@ -33,7 +36,6 @@ namespace EWasteSolutions.Pages.Admin.Products
         public string? CurrentImageUrl { get; set; }
 
         public SelectList CategoryList { get; set; } = default!;
-
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -51,9 +53,7 @@ namespace EWasteSolutions.Pages.Admin.Products
 
             Product = product;
 
-            CurrentImageUrl = product.ProductImages?
-                .FirstOrDefault(image => image.IsPrimary)?.ImageUrl
-                ?? product.ProductImages?.FirstOrDefault()?.ImageUrl;
+            SetCurrentImage(product);
 
             await LoadCategoriesAsync();
 
@@ -62,6 +62,9 @@ namespace EWasteSolutions.Pages.Admin.Products
 
         public async Task<IActionResult> OnPostAsync()
         {
+            // Fallback if normal file binding fails.
+            ImageFile ??= Request.Form.Files.GetFile(nameof(ImageFile));
+
             ValidateImage();
 
             if (!ModelState.IsValid)
@@ -79,6 +82,9 @@ namespace EWasteSolutions.Pages.Admin.Products
             {
                 return NotFound();
             }
+
+            string? newlyUploadedPublicId = null;
+            string? oldPublicId = null;
 
             try
             {
@@ -99,41 +105,79 @@ namespace EWasteSolutions.Pages.Admin.Products
 
                 if (ImageFile != null && ImageFile.Length > 0)
                 {
-                    var oldPrimaryImage =
-                        existingProduct.ProductImages?
-                            .FirstOrDefault(image => image.IsPrimary)
-                        ?? existingProduct.ProductImages?.FirstOrDefault();
+                    _logger.LogInformation(
+                        "Replacing product image. File: {FileName}, Size: {FileSize}",
+                        ImageFile.FileName,
+                        ImageFile.Length);
 
                     var uploadResult =
                         await _imageService.UploadAsync(ImageFile);
 
-                    existingProduct.ProductImages ??= new List<ProductImage>();
+                    if (string.IsNullOrWhiteSpace(uploadResult.ImageUrl) ||
+                        string.IsNullOrWhiteSpace(uploadResult.PublicId))
+                    {
+                        throw new InvalidOperationException(
+                            "Cloudinary did not return valid image details.");
+                    }
+
+                    newlyUploadedPublicId = uploadResult.PublicId;
+
+                    existingProduct.ProductImages ??=
+                        new List<ProductImage>();
+
+                    var oldPrimaryImage =
+                        existingProduct.ProductImages
+                            .FirstOrDefault(image => image.IsPrimary)
+                        ?? existingProduct.ProductImages.FirstOrDefault();
 
                     if (oldPrimaryImage != null)
                     {
-                        var oldPublicId = oldPrimaryImage.PublicId;
+                        oldPublicId = oldPrimaryImage.PublicId;
 
-                        oldPrimaryImage.ImageUrl = uploadResult.ImageUrl;
-                        oldPrimaryImage.PublicId = uploadResult.PublicId;
+                        oldPrimaryImage.ImageUrl =
+                            uploadResult.ImageUrl;
+
+                        oldPrimaryImage.PublicId =
+                            uploadResult.PublicId;
+
+                        oldPrimaryImage.AltText =
+                            existingProduct.Name;
+
                         oldPrimaryImage.IsPrimary = true;
 
-                        if (!string.IsNullOrWhiteSpace(oldPublicId))
-                        {
-                            await _imageService.DeleteAsync(oldPublicId);
-                        }
+                        oldPrimaryImage.DisplayOrder = 1;
                     }
                     else
                     {
-                        existingProduct.ProductImages.Add(new ProductImage
-                        {
-                            ImageUrl = uploadResult.ImageUrl,
-                            PublicId = uploadResult.PublicId,
-                            IsPrimary = true
-                        });
+                        existingProduct.ProductImages.Add(
+                            new ProductImage
+                            {
+                                ImageUrl = uploadResult.ImageUrl,
+                                PublicId = uploadResult.PublicId,
+                                AltText = existingProduct.Name,
+                                IsPrimary = true,
+                                DisplayOrder = 1,
+                                CreatedAt = DateTime.UtcNow
+                            });
                     }
                 }
 
                 await _productService.UpdateAsync(existingProduct);
+
+                // Delete the old Cloudinary image only after DB save succeeds.
+                if (!string.IsNullOrWhiteSpace(oldPublicId))
+                {
+                    try
+                    {
+                        await _imageService.DeleteAsync(oldPublicId);
+                    }
+                    catch (Exception deleteException)
+                    {
+                        _logger.LogError(
+                            deleteException,
+                            "Product updated, but old Cloudinary image could not be deleted.");
+                    }
+                }
 
                 TempData["SuccessMessage"] =
                     "Product updated successfully.";
@@ -142,31 +186,42 @@ namespace EWasteSolutions.Pages.Admin.Products
             }
             catch (Exception ex)
             {
+                _logger.LogError(
+                    ex,
+                    "Product update or image replacement failed.");
+
+                // Remove the new Cloudinary image if DB save failed.
+                if (!string.IsNullOrWhiteSpace(newlyUploadedPublicId))
+                {
+                    try
+                    {
+                        await _imageService.DeleteAsync(
+                            newlyUploadedPublicId);
+                    }
+                    catch (Exception cleanupException)
+                    {
+                        _logger.LogError(
+                            cleanupException,
+                            "Failed to remove the newly uploaded Cloudinary image.");
+                    }
+                }
+
                 ModelState.AddModelError(
                     string.Empty,
                     $"The product could not be updated: {ex.Message}");
 
                 await LoadCategoriesAsync();
 
-                CurrentImageUrl = existingProduct.ProductImages?
-                    .FirstOrDefault(image => image.IsPrimary)?.ImageUrl
-                    ?? existingProduct.ProductImages?.FirstOrDefault()?.ImageUrl;
+                SetCurrentImage(existingProduct);
 
                 return Page();
             }
         }
-        private async Task LoadCurrentImageAsync()
-        {
-            var existingProduct =
-                await _productService.GetByIdAsync(Product.Id);
-
-            CurrentImageUrl = existingProduct?.ProductImages?
-                .FirstOrDefault(image => image.IsPrimary)?.ImageUrl
-                ?? existingProduct?.ProductImages?.FirstOrDefault()?.ImageUrl;
-        }
 
         private void ValidateImage()
         {
+            // Image is optional during Edit.
+            // If no new image is selected, keep the current image.
             if (ImageFile == null || ImageFile.Length == 0)
             {
                 return;
@@ -174,14 +229,15 @@ namespace EWasteSolutions.Pages.Admin.Products
 
             var allowedExtensions = new[]
             {
-        ".jpg",
-        ".jpeg",
-        ".png",
-        ".webp"
-    };
+                ".jpg",
+                ".jpeg",
+                ".png",
+                ".webp"
+            };
 
-            var extension =
-                Path.GetExtension(ImageFile.FileName).ToLowerInvariant();
+            var extension = Path
+                .GetExtension(ImageFile.FileName)
+                .ToLowerInvariant();
 
             if (!allowedExtensions.Contains(extension))
             {
@@ -190,35 +246,66 @@ namespace EWasteSolutions.Pages.Admin.Products
                     "Only JPG, JPEG, PNG and WEBP images are allowed.");
             }
 
-            const long maximumFileSize = 5 * 1024 * 1024;
+            const long maximumFileSize =
+                10 * 1024 * 1024;
 
             if (ImageFile.Length > maximumFileSize)
             {
                 ModelState.AddModelError(
                     nameof(ImageFile),
-                    "The image size cannot exceed 5 MB.");
+                    "The image size cannot exceed 10 MB.");
             }
 
-            if (string.IsNullOrWhiteSpace(ImageFile.ContentType) ||
-                !ImageFile.ContentType.StartsWith(
-                    "image/",
-                    StringComparison.OrdinalIgnoreCase))
+            var allowedContentTypes = new[]
+            {
+                "image/jpeg",
+                "image/png",
+                "image/webp"
+            };
+
+            if (string.IsNullOrWhiteSpace(
+                    ImageFile.ContentType) ||
+                !allowedContentTypes.Contains(
+                    ImageFile.ContentType.ToLowerInvariant()))
             {
                 ModelState.AddModelError(
                     nameof(ImageFile),
-                    "Please select a valid image file.");
+                    "Please select a valid JPG, PNG or WEBP image.");
             }
         }
+
+        private async Task LoadCurrentImageAsync()
+        {
+            var existingProduct =
+                await _productService.GetByIdAsync(Product.Id);
+
+            if (existingProduct != null)
+            {
+                SetCurrentImage(existingProduct);
+            }
+        }
+
+        private void SetCurrentImage(Product product)
+        {
+            CurrentImageUrl =
+                product.ProductImages?
+                    .FirstOrDefault(image => image.IsPrimary)
+                    ?.ImageUrl
+                ?? product.ProductImages?
+                    .FirstOrDefault()
+                    ?.ImageUrl;
+        }
+
         private async Task LoadCategoriesAsync()
         {
-            var categories = await _categoryService.GetAllAsync();
+            var categories =
+                await _categoryService.GetAllAsync();
 
             CategoryList = new SelectList(
-                categories,
+                categories.Where(category => category.IsActive),
                 "Id",
                 "Name",
-                Product.CategoryId
-            );
+                Product.CategoryId);
         }
     }
 }

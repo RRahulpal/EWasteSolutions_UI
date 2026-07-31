@@ -13,15 +13,18 @@ namespace EWasteSolutions.Pages.Admin.Products
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
         private readonly IImageService _imageService;
+        private readonly ILogger<CreateModel> _logger;
 
         public CreateModel(
             IProductService productService,
             ICategoryService categoryService,
-            IImageService imageService)
+            IImageService imageService,
+            ILogger<CreateModel> logger)
         {
             _productService = productService;
             _categoryService = categoryService;
             _imageService = imageService;
+            _logger = logger;
         }
 
         [BindProperty]
@@ -39,6 +42,9 @@ namespace EWasteSolutions.Pages.Admin.Products
 
         public async Task<IActionResult> OnPostAsync()
         {
+            // Explicit fallback for file binding.
+            ImageFile ??= Request.Form.Files.GetFile(nameof(ImageFile));
+
             ValidateImage();
 
             if (!ModelState.IsValid)
@@ -47,22 +53,49 @@ namespace EWasteSolutions.Pages.Admin.Products
                 return Page();
             }
 
+            string? uploadedPublicId = null;
+
             try
             {
-                if (ImageFile != null && ImageFile.Length > 0)
+                if (ImageFile == null || ImageFile.Length == 0)
                 {
-                    var uploadResult =
-                        await _imageService.UploadAsync(ImageFile);
+                    ModelState.AddModelError(
+                        nameof(ImageFile),
+                        "No image file was received by the server.");
 
-                    Product.ProductImages ??= new List<ProductImage>();
-
-                    Product.ProductImages.Add(new ProductImage
-                    {
-                        ImageUrl = uploadResult.ImageUrl,
-                        PublicId = uploadResult.PublicId,
-                        IsPrimary = true
-                    });
+                    await LoadCategoriesAsync();
+                    return Page();
                 }
+
+                _logger.LogInformation(
+                    "Uploading image {FileName}, size {FileSize}, type {ContentType}",
+                    ImageFile.FileName,
+                    ImageFile.Length,
+                    ImageFile.ContentType);
+
+                var uploadResult =
+                    await _imageService.UploadAsync(ImageFile);
+
+                if (string.IsNullOrWhiteSpace(uploadResult.ImageUrl) ||
+                    string.IsNullOrWhiteSpace(uploadResult.PublicId))
+                {
+                    throw new InvalidOperationException(
+                        "Cloudinary did not return an image URL or public ID.");
+                }
+
+                uploadedPublicId = uploadResult.PublicId;
+
+                Product.ProductImages ??= new List<ProductImage>();
+
+                Product.ProductImages.Add(new ProductImage
+                {
+                    ImageUrl = uploadResult.ImageUrl,
+                    PublicId = uploadResult.PublicId,
+                    AltText = Product.Name,
+                    IsPrimary = true,
+                    DisplayOrder = 1,
+                    CreatedAt = DateTime.UtcNow
+                });
 
                 Product.CreatedAt = DateTime.UtcNow;
                 Product.UpdatedAt = DateTime.UtcNow;
@@ -70,18 +103,38 @@ namespace EWasteSolutions.Pages.Admin.Products
                 await _productService.CreateAsync(Product);
 
                 TempData["SuccessMessage"] =
-                    "Product added successfully.";
+                    "Product and image added successfully.";
 
                 return RedirectToPage("Index");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(
+                    ex,
+                    "Product image upload or product creation failed.");
+
+                // If Cloudinary upload succeeded but database saving failed,
+                // remove the orphaned Cloudinary image.
+                if (!string.IsNullOrWhiteSpace(uploadedPublicId))
+                {
+                    try
+                    {
+                        await _imageService.DeleteAsync(uploadedPublicId);
+                    }
+                    catch (Exception cleanupException)
+                    {
+                        _logger.LogError(
+                            cleanupException,
+                            "Failed to remove orphaned Cloudinary image {PublicId}.",
+                            uploadedPublicId);
+                    }
+                }
+
                 ModelState.AddModelError(
                     string.Empty,
-                    "The product could not be saved. Please try again.");
+                    $"Unable to save the product: {ex.Message}");
 
                 await LoadCategoriesAsync();
-
                 return Page();
             }
         }
@@ -90,6 +143,10 @@ namespace EWasteSolutions.Pages.Admin.Products
         {
             if (ImageFile == null || ImageFile.Length == 0)
             {
+                ModelState.AddModelError(
+                    nameof(ImageFile),
+                    "Please select a product image.");
+
                 return;
             }
 
@@ -101,8 +158,9 @@ namespace EWasteSolutions.Pages.Admin.Products
                 ".webp"
             };
 
-            var extension =
-                Path.GetExtension(ImageFile.FileName).ToLowerInvariant();
+            var extension = Path
+                .GetExtension(ImageFile.FileName)
+                .ToLowerInvariant();
 
             if (!allowedExtensions.Contains(extension))
             {
@@ -111,22 +169,29 @@ namespace EWasteSolutions.Pages.Admin.Products
                     "Only JPG, JPEG, PNG and WEBP images are allowed.");
             }
 
-            const long maximumFileSize = 5 * 1024 * 1024;
+            const long maximumFileSize = 10 * 1024 * 1024;
 
             if (ImageFile.Length > maximumFileSize)
             {
                 ModelState.AddModelError(
                     nameof(ImageFile),
-                    "The image size cannot exceed 5 MB.");
+                    "The image size cannot exceed 10 MB.");
             }
 
-            if (!ImageFile.ContentType.StartsWith(
-                    "image/",
-                    StringComparison.OrdinalIgnoreCase))
+            var allowedContentTypes = new[]
+            {
+                "image/jpeg",
+                "image/png",
+                "image/webp"
+            };
+
+            if (string.IsNullOrWhiteSpace(ImageFile.ContentType) ||
+                !allowedContentTypes.Contains(
+                    ImageFile.ContentType.ToLowerInvariant()))
             {
                 ModelState.AddModelError(
                     nameof(ImageFile),
-                    "Please select a valid image file.");
+                    "The selected file is not a supported image.");
             }
         }
 
@@ -136,7 +201,7 @@ namespace EWasteSolutions.Pages.Admin.Products
                 await _categoryService.GetAllAsync();
 
             CategoryList = new SelectList(
-                categories.Where(c => c.IsActive),
+                categories.Where(category => category.IsActive),
                 "Id",
                 "Name",
                 Product.CategoryId);
