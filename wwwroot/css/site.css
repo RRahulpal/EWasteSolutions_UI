@@ -2031,3 +2031,127 @@ body {
         margin: 10px 0 0;
     }
 }
+.product-card {
+    border-radius: 18px;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+    .product-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 18px 40px rgba(16, 42, 67, 0.12) !important;
+    }
+
+.product-image-wrapper {
+    background: #f6f8f7;
+    height: 260px;
+    overflow: hidden;
+}
+
+.product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 18px;
+}
+
+.product-image-placeholder {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-price {
+    color: #12805c;
+    font-size: 1.45rem;
+    font-weight: 700;
+}
+
+.product-specifications {
+    color: #5f7069;
+    font-size: 0.92rem;
+    line-height: 1.8;
+}
+.product-details-page {
+    background: #f8faf9;
+    min-height: 70vh;
+}
+
+.product-details-image-wrapper {
+    position: relative;
+    min-height: 480px;
+    background: #ffffff;
+    border: 1px solid #e2ebe7;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 16px 40px rgba(16, 42, 67, 0.08);
+}
+
+.product-details-image {
+    width: 100%;
+    height: 480px;
+    object-fit: contain;
+    padding: 30px;
+}
+
+.product-details-placeholder {
+    width: 100%;
+    height: 480px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-details-featured {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 0.9rem;
+    padding: 10px 14px;
+}
+
+.product-details-price {
+    color: #12805c;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.product-details-specifications {
+    background: #ffffff;
+    border: 1px solid #e2ebe7;
+    border-radius: 18px;
+    padding: 24px;
+}
+
+.specification-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 13px 0;
+    border-bottom: 1px solid #edf2f0;
+}
+
+    .specification-row:last-child {
+        border-bottom: 0;
+    }
+
+    .specification-row span {
+        color: #6c7f78;
+    }
+
+@media (max-width: 767px) {
+    .product-details-image-wrapper,
+    .product-details-image,
+    .product-details-placeholder {
+        min-height: 340px;
+        height: 340px;
+    }
+
+    .product-details-image {
+        padding: 20px;
+    }
+}

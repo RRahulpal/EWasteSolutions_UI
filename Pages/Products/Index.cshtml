@@ -1,838 +1,173 @@
-@page
+﻿@page
+@model EWasteSolutions.Pages.ProductsModel
 
 @{
-    ViewData["Title"] = "Refurbished Products";
+    ViewData["Title"] = "Products";
 }
 
-<!-- Product Page Hero -->
-<section class="page-hero product-page-hero">
+<section class="products-page py-5">
     <div class="container">
 
-        <div class="row align-items-center g-4">
+        <div class="text-center mb-5">
+            <span class="text-success fw-semibold text-uppercase">
+                Refurbished Technology
+            </span>
 
-            <div class="col-lg-7 hero-content-animation">
+            <h1 class="fw-bold mt-2">
+                Available Products
+            </h1>
 
-                <span class="eyebrow">
-                    <i class="fa-solid fa-laptop me-2"></i>
-                    Refurbished hardware
-                </span>
+            <p class="text-muted mx-auto"
+               style="max-width: 700px;">
+                Explore quality refurbished laptops, desktops,
+                monitors and accessories.
+            </p>
+        </div>
 
-                <h1>
-                    Tested technology at
-                    <span>better value</span>
-                </h1>
+        @if (Model.Products.Count == 0)
+        {
+            <div class="text-center py-5">
+                <div class="mb-3">
+                    <i class="fa-solid fa-box-open fa-3x text-muted"></i>
+                </div>
 
-                <p>
-                    Explore professionally inspected refurbished laptops,
-                    desktops, monitors, storage devices and accessories.
-                    Product availability may change based on current stock.
+                <h4>No products are currently available</h4>
+
+                <p class="text-muted">
+                    Please check again later.
                 </p>
-
             </div>
-
-            <div class="col-lg-5 text-center hero-image-animation">
-
-                <img src="~/images/products/laptab.png"
-                     class="img-fluid product-hero-image"
-                     alt="Refurbished business laptop" />
-
-            </div>
-
-        </div>
-
-    </div>
-</section>
-
-<!-- Product Catalogue -->
-<section class="section">
-    <div class="container">
-
-        <!-- Heading -->
-        <div class="section-title reveal">
-
-            <span>Available categories</span>
-
-            <h2>Explore refurbished products</h2>
-
-            <p>
-                Select a category to view matching products.
-                Contact us through WhatsApp for price, warranty,
-                stock availability and additional configurations.
-            </p>
-
-        </div>
-
-        <!-- Product Filters -->
-        <div class="product-filter-wrapper reveal">
-
-            <button type="button"
-                    class="btn btn-outline-brand filter-btn active"
-                    data-filter="all">
-
-                <i class="fa-solid fa-border-all me-2"></i>
-                All Products
-
-            </button>
-
-            <button type="button"
-                    class="btn btn-outline-brand filter-btn"
-                    data-filter="laptop">
-
-                <i class="fa-solid fa-laptop me-2"></i>
-                Laptops
-
-            </button>
-
-            <button type="button"
-                    class="btn btn-outline-brand filter-btn"
-                    data-filter="desktop">
-
-                <i class="fa-solid fa-computer me-2"></i>
-                Desktops
-
-            </button>
-
-            <button type="button"
-                    class="btn btn-outline-brand filter-btn"
-                    data-filter="monitor">
-
-                <i class="fa-solid fa-display me-2"></i>
-                Monitors
-
-            </button>
-
-            <button type="button"
-                    class="btn btn-outline-brand filter-btn"
-                    data-filter="accessory">
-
-                <i class="fa-solid fa-keyboard me-2"></i>
-                Accessories
-
-            </button>
-
-        </div>
-
-        <!-- Products -->
-        <div class="row g-4 product-grid">
-
-            <!-- Dell Latitude 5420 -->
-            <div class="col-md-6 col-xl-4 product-item reveal-zoom delay-1"
-                 data-category="laptop">
-
-                <article class="product-card">
-
-                    <div class="product-image-wrapper">
-
-                        <img src="~/images/products/dell-latitude-5420.jpg"
-                             class="product-image"
-                             alt="Dell Latitude 5420 refurbished laptop"
-                             loading="lazy" />
-
-                        <span class="product-condition-badge">
-                            Grade A
-                        </span>
-
-                        <span class="product-stock-badge">
-                            <i class="fa-solid fa-circle-check me-1"></i>
-                            In Stock
-                        </span>
-
-                    </div>
-
-                    <div class="product-card-body">
-
-                        <span class="product-category">
-                            Business Laptop
-                        </span>
-
-                        <h3 class="product-title">
-                            Dell Latitude 5420
-                        </h3>
-
-                        <p class="product-description">
-                            A dependable business-class laptop suitable for
-                            office work, remote work and professional use.
-                        </p>
-
-                        <ul class="product-specification-list">
-
-                            <li>
-                                <i class="fa-solid fa-microchip"></i>
-                                Intel Core i5 processor
-                            </li>
-
-                            <li>
-                                <i class="fa-solid fa-memory"></i>
-                                16 GB RAM
-                            </li>
-
-                            <li>
-                                <i class="fa-solid fa-hard-drive"></i>
-                                512 GB SSD
-                            </li>
-
-                            <li>
-                                <i class="fa-solid fa-display"></i>
-                                14-inch display
-                            </li>
-
-                        </ul>
-
-                        <div class="product-card-footer">
-
-                            <div>
-                                <span class="price-label">Current price</span>
-                                <strong class="product-price">
-                                    Price on request
-                                </strong>
-                            </div>
-
-                            <button type="button"
-                                    class="btn btn-brand product-enquiry-btn"
-                                    data-product="Dell Latitude 5420">
-
-                                <i class="fa-brands fa-whatsapp me-2"></i>
-                                Enquire
-
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-            <!-- HP EliteBook 840 G7 -->
-            <div class="col-md-6 col-xl-4 product-item reveal-zoom delay-2"
-                 data-category="laptop">
-
-                <article class="product-card">
-
-                    <div class="product-image-wrapper">
-
-                        <img src="~/images/products/hp-elitebook-840-g7.jpg"
-                             class="product-image"
-                             alt="HP EliteBook 840 G7 refurbished laptop"
-                             loading="lazy" />
-
-                        <span class="product-condition-badge">
-                            Grade A
-                        </span>
-
-                        <span class="product-stock-badge">
-                            <i class="fa-solid fa-circle-check me-1"></i>
-                            In Stock
-                        </span>
-
-                    </div>
-
-                    <div class="product-card-body">
-
-                        <span class="product-category">
-                            Business Laptop
-                        </span>
-
-                        <h3 class="product-title">
-                            HP EliteBook 840 G7
-                        </h3>
-
-                        <p class="product-description">
-                            A premium and portable business laptop designed
-                            for office productivity and everyday professional use.
-                        </p>
-
-                        <ul class="product-specification-list">
-
-                            <li>
-                                <i class="fa-solid fa-microchip"></i>
-                                Intel Core i5 processor
-                            </li>
-
-                            <li>
-                                <i class="fa-solid fa-memory"></i>
-                                8 GB RAM
-                            </li>
-
-                            <li>
-                                <i class="fa-solid fa-hard-drive"></i>
-                                256 GB SSD
-                            </li>
-
-                            <li>
-                                <i class="fa-solid fa-display"></i>
-                                14-inch display
-                            </li>
-
-                        </ul>
-
-                        <div class="product-card-footer">
-
-                            <div>
-                                <span class="price-label">Current price</span>
-                                <strong class="product-price">
-                                    Price on request
-                                </strong>
-                            </div>
-
-                            <button type="button"
-                                    class="btn btn-brand product-enquiry-btn"
-                                    data-product="HP EliteBook 840 G7">
-
-                                <i class="fa-brands fa-whatsapp me-2"></i>
-                                Enquire
-
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-            <!-- Lenovo ThinkCentre -->
-            <div class="col-md-6 col-xl-4 product-item reveal-zoom delay-3"
-                 data-category="desktop">
-
-                <article class="product-card">
-
-                    <div class="product-image-wrapper">
-
-                        <img src="~/images/products/lenovo-thinkcentre.jpg"
-                             class="product-image"
-                             alt="Lenovo ThinkCentre refurbished desktop"
-                             loading="lazy" />
-
-                        <span class="product-condition-badge grade-b">
-                            Grade B
-                        </span>
-
-                        <span class="product-stock-badge">
-                            <i class="fa-solid fa-circle-check me-1"></i>
-                            Available
-                        </span>
-
-                    </div>
-
-                    <div class="product-card-body">
-
-                        <span class="product-category">
-                            Business Desktop
-                        </span>
-
-                        <h3 class="product-title">
-                            Lenovo ThinkCentre
-                        </h3>
-
-                        <p class="product-description">
-                            A compact and reliable business desktop suitable
-                            for office workstations, billing and administration.
-                        </p>
-
-                        <ul class="product-specification-list">
-
-                            <li>
-                                <i class="fa-solid fa-microchip"></i>
-                                Intel Core i5 processor
-                            </li>
-
-                            <li>
-                                <i class="fa-solid fa-memory"></i>
-                                8 GB RAM
-                            </li>
-
-                            <li>
-                                <i class="fa-solid fa-hard-drive"></i>
-                                512 GB SSD
-                            </li>
-
-                            <li>
-                                <i class="fa-solid fa-computer"></i>
-                                Compact desktop form factor
-                            </li>
-
-                        </ul>
-
-                        <div class="product-card-footer">
-
-                            <div>
-                                <span class="price-label">Current price</span>
-                                <strong class="product-price">
-                                    Price on request
-                                </strong>
-                            </div>
-
-                            <button type="button"
-                                    class="btn btn-brand product-enquiry-btn"
-                                    data-product="Lenovo ThinkCentre Desktop">
-
-                                <i class="fa-brands fa-whatsapp me-2"></i>
-                                Enquire
-
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-            <!-- Dell Monitor -->
-            <div class="col-md-6 col-xl-4 product-item reveal-zoom delay-1"
-                 data-category="monitor">
-
-                <article class="product-card">
-
-                    <div class="product-image-wrapper">
-
-                        <img src="~/images/products/dell-22-monitor.jpg"
-                             class="product-image"
-                             alt="Dell 22-inch refurbished monitor"
-                             loading="lazy" />
-
-                        <span class="product-condition-badge">
-                            Grade A
-                        </span>
-
-                        <span class="product-stock-badge">
-                            <i class="fa-solid fa-circle-check me-1"></i>
-                            Available
-                        </span>
-
-                    </div>
-
-                    <div class="product-card-body">
-
-                        <span class="product-category">
-                            Computer Monitor
-                        </span>
-
-                        <h3 class="product-title">
-                            Dell 22-inch Monitor
-                        </h3>
-
-                        <p class="product-description">
-                            A professional display for office desks,
-                            home workstations and business environments.
-                        </p>
-
-                        <ul class="product-specification-list">
-
-                            <li>
-                                <i class="fa-solid fa-display"></i>
-                                22-inch screen
-                            </li>
-
-                            <li>
-                                <i class="fa-solid fa-tv"></i>
-                                Full HD resolution
-                            </li>
-
-                            <li>
-                                <i class="fa-solid fa-plug"></i>
-                                HDMI support
-                            </li>
-
-                            <li>
-                                <i class="fa-solid fa-code-branch"></i>
-                                DisplayPort support
-                            </li>
-
-                        </ul>
-
-                        <div class="product-card-footer">
-
-                            <div>
-                                <span class="price-label">Current price</span>
-                                <strong class="product-price">
-                                    Price on request
-                                </strong>
-                            </div>
-
-                            <button type="button"
-                                    class="btn btn-brand product-enquiry-btn"
-                                    data-product="Dell 22-inch Monitor">
-
-                                <i class="fa-brands fa-whatsapp me-2"></i>
-                                Enquire
-
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-            <!-- Keyboard and Mouse -->
-            <div class="col-md-6 col-xl-4 product-item reveal-zoom delay-2"
-                 data-category="accessory">
-
-                <article class="product-card">
-
-                    <div class="product-image-wrapper">
-
-                        <img src="~/images/products/keyboard-mouse.jpg"
-                             class="product-image"
-                             alt="USB keyboard and mouse combo"
-                             loading="lazy" />
-
-                        <span class="product-condition-badge tested">
-                            Tested
-                        </span>
-
-                        <span class="product-stock-badge">
-                            <i class="fa-solid fa-circle-check me-1"></i>
-                            Available
-                        </span>
-
-                    </div>
-
-                    <div class="product-card-body">
-
-                        <span class="product-category">
-                            Computer Accessory
-                        </span>
-
-                        <h3 class="product-title">
-                            Keyboard and Mouse Combo
-                        </h3>
-
-                        <p class="product-description">
-                            A practical wired keyboard and mouse combination
-                            suitable for home and office computers.
-                        </p>
-
-                        <ul class="product-specification-list">
-
-                            <li>
-                                <i class="fa-solid fa-keyboard"></i>
-                                Full-size keyboard
-                            </li>
-
-                            <li>
-                                <i class="fa-solid fa-computer-mouse"></i>
-                                Optical mouse
-                            </li>
-
-                            <li>
-                                <i class="fa-brands fa-usb"></i>
-                                USB connection
-                            </li>
-
-                            <li>
-                                <i class="fa-solid fa-building"></i>
-                                Suitable for office use
-                            </li>
-
-                        </ul>
-
-                        <div class="product-card-footer">
-
-                            <div>
-                                <span class="price-label">Current price</span>
-                                <strong class="product-price">
-                                    Price on request
-                                </strong>
-                            </div>
-
-                            <button type="button"
-                                    class="btn btn-brand product-enquiry-btn"
-                                    data-product="Keyboard and Mouse Combo">
-
-                                <i class="fa-brands fa-whatsapp me-2"></i>
-                                Enquire
-
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-            <!-- Enterprise SSD -->
-            <div class="col-md-6 col-xl-4 product-item reveal-zoom delay-3"
-                 data-category="accessory">
-
-                <article class="product-card">
-
-                    <div class="product-image-wrapper">
-
-                        <img src="~/images/products/enterprise-ssd.jpg"
-                             class="product-image"
-                             alt="Enterprise solid-state drive"
-                             loading="lazy" />
-
-                        <span class="product-condition-badge tested">
-                            Tested
-                        </span>
-
-                        <span class="product-stock-badge">
-                            <i class="fa-solid fa-circle-check me-1"></i>
-                            Subject to Stock
-                        </span>
-
-                    </div>
-
-                    <div class="product-card-body">
-
-                        <span class="product-category">
-                            Storage Device
-                        </span>
-
-                        <h3 class="product-title">
-                            Enterprise SSD
-                        </h3>
-
-                        <p class="product-description">
-                            Tested solid-state storage for desktops,
-                            laptops and selected enterprise environments.
-                        </p>
-
-                        <ul class="product-specification-list">
-
-                            <li>
-                                <i class="fa-solid fa-hard-drive"></i>
-                                Multiple capacities
-                            </li>
-
-                            <li>
-                                <i class="fa-solid fa-gauge-high"></i>
-                                Fast storage performance
-                            </li>
-
-                            <li>
-                                <i class="fa-solid fa-vial-circle-check"></i>
-                                Health checked
-                            </li>
-
-                            <li>
-                                <i class="fa-solid fa-box-open"></i>
-                                Subject to availability
-                            </li>
-
-                        </ul>
-
-                        <div class="product-card-footer">
-
-                            <div>
-                                <span class="price-label">Current price</span>
-                                <strong class="product-price">
-                                    Price on request
-                                </strong>
-                            </div>
-
-                            <button type="button"
-                                    class="btn btn-brand product-enquiry-btn"
-                                    data-product="Enterprise SSD">
-
-                                <i class="fa-brands fa-whatsapp me-2"></i>
-                                Enquire
-
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-        </div>
-
-        <!-- No Products Message -->
-        <div id="noProductsMessage"
-             class="no-products-message d-none">
-
-            <i class="fa-solid fa-box-open"></i>
-
-            <h3>No products found</h3>
-
-            <p>
-                No products are currently available in this category.
-            </p>
-
-        </div>
-
-    </div>
-</section>
-
-<!-- Product Enquiry CTA -->
-<section class="section pt-0">
-    <div class="container">
-
-        <div class="cta-panel reveal">
-
-            <div class="row align-items-center g-4">
-
-                <div class="col-lg-8">
-
-                    <span class="cta-label">
-                        Looking for another configuration?
-                    </span>
-
-                    <h2>
-                        Tell us what product you need
-                    </h2>
-
-                    <p class="mb-lg-0">
-                        Share your required brand, processor, RAM, storage,
-                        quantity and budget through WhatsApp.
-                    </p>
-
-                </div>
-
-                <div class="col-lg-4 text-lg-end">
-
-                    <button type="button"
-                            class="btn btn-light btn-lg fw-bold"
-                            id="generalProductEnquiry">
-
-                        <i class="fa-brands fa-whatsapp me-2"></i>
-                        Send Requirement
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-</section>
-
-@section Scripts {
-
-    <script>
-                document.addEventListener("DOMContentLoaded", function () {
-
-                    const filterButtons =
-                        document.querySelectorAll(".filter-btn");
-
-                    const productItems =
-                        document.querySelectorAll(".product-item");
-
-                    const enquiryButtons =
-                        document.querySelectorAll(".product-enquiry-btn");
-
-                    const noProductsMessage =
-                        document.getElementById("noProductsMessage");
-
-                    filterButtons.forEach(function (button) {
-
-                        button.addEventListener("click", function () {
-
-                            const selectedCategory =
-                                this.dataset.filter;
-
-                            let visibleProducts = 0;
-
-                            filterButtons.forEach(function (item) {
-                                item.classList.remove("active");
-                            });
-
-                            this.classList.add("active");
-
-                            productItems.forEach(function (product) {
-
-                                const productCategory =
-                                    product.dataset.category;
-
-                                const shouldDisplay =
-                                    selectedCategory === "all" ||
-                                    selectedCategory === productCategory;
-
-                                if (shouldDisplay) {
-
-                                    product.classList.remove("d-none");
-
-                                    product.style.animation = "none";
-
-                                    window.requestAnimationFrame(function () {
-                                        product.style.animation =
-                                            "productShow 0.5s ease";
-                                    });
-
-                                    visibleProducts++;
-
-                                } else {
-
-                                    product.classList.add("d-none");
-
+        }
+        else
+        {
+            <div class="row g-4">
+
+                @foreach (var product in Model.Products)
+                {
+                    var primaryImage =
+                    product.ProductImages?
+                    .FirstOrDefault(image => image.IsPrimary)
+                    ?? product.ProductImages?.FirstOrDefault();
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card product-card h-100 border-0 shadow-sm">
+
+                            <div class="product-image-wrapper position-relative">
+
+                                @if (primaryImage != null &&
+                                                        !string.IsNullOrWhiteSpace(primaryImage.ImageUrl))
+                                {
+                                    <img src="@primaryImage.ImageUrl"
+                                         alt="@product.Name"
+                                         class="card-img-top product-image"
+                                         loading="lazy" />
+                                }
+                                else
+                                {
+                                    <div class="product-image-placeholder">
+                                        <i class="fa-regular fa-image fa-3x text-muted"></i>
+                                    </div>
                                 }
 
-                            });
+                                @if (product.IsFeatured)
+                                {
+                                    <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-3">
+                                        Featured
+                                    </span>
+                                }
 
-                            if (noProductsMessage) {
+                                @if (product.Stock <= 0)
+                                {
+                                    <span class="badge bg-danger position-absolute top-0 end-0 m-3">
+                                        Out of Stock
+                                    </span>
+                                }
+                            </div>
 
-                                noProductsMessage.classList.toggle(
-                                    "d-none",
-                                    visibleProducts > 0
-                                );
+                            <div class="card-body d-flex flex-column">
 
-                            }
+                                <div class="small text-success fw-semibold mb-2">
+                                    @(product.Category?.Name ?? "Product")
+                                </div>
 
-                        });
+                                <h4 class="card-title">
+                                    @product.Name
+                                </h4>
 
-                    });
+                                @if (!string.IsNullOrWhiteSpace(product.Brand))
+                                {
+                                    <p class="text-muted mb-2">
+                                        Brand: @product.Brand
+                                    </p>
+                                }
 
-                    enquiryButtons.forEach(function (button) {
+                                <div class="product-specifications mb-3">
 
-                        button.addEventListener("click", function () {
+                                    @if (!string.IsNullOrWhiteSpace(product.Processor))
+                                    {
+                                        <div>
+                                            <strong>Processor:</strong>
+                                            @product.Processor
+                                        </div>
+                                    }
 
-                            const productName =
-                                this.dataset.product;
+                                    @if (!string.IsNullOrWhiteSpace(product.Ram))
+                                    {
+                                        <div>
+                                            <strong>RAM:</strong>
+                                            @product.Ram
+                                        </div>
+                                    }
 
-                            enquireProduct(productName);
+                                    @if (!string.IsNullOrWhiteSpace(product.Storage))
+                                    {
+                                        <div>
+                                            <strong>Storage:</strong>
+                                            @product.Storage
+                                        </div>
+                                    }
 
-                        });
+                                    @if (!string.IsNullOrWhiteSpace(product.Condition))
+                                    {
+                                        <div>
+                                            <strong>Condition:</strong>
+                                            @product.Condition
+                                        </div>
+                                    }
+                                </div>
 
-                    });
+                                <div class="mt-auto">
 
-                    const generalProductEnquiry =
-                        document.getElementById("generalProductEnquiry");
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
 
-                    if (generalProductEnquiry) {
+                                        <div class="product-price">
+                                            ₹@product.Price.ToString("N0")
+                                        </div>
 
-                        generalProductEnquiry.addEventListener(
-                            "click",
-                            function () {
+                                        @if (product.Stock > 0)
+                                        {
+                                            <span class="text-success small">
+                                                In Stock
+                                            </span>
+                                        }
+                                    </div>
 
-                                openWhatsApp(
-        `Hello E-Waste Solutions,
+                                    <a asp-page="/Product/Details"
+                                       asp-route-id="@product.Id"
+                                       class="btn btn-success w-100">
+                                        View Details
+                                    </a>
 
-        I am looking for a refurbished IT product.
+                                </div>
 
-        Required product:
-        Brand:
-        Processor:
-        RAM:
-        Storage:
-        Quantity:
-        Budget:
-        Location:
+                            </div>
 
-        Please share available options.`
-                                );
+                        </div>
+                    </div>
+                }
 
-                            }
-                        );
+            </div>
+        }
 
-                    }
-
-                });
-    </script>
-
-}
+    </div>
+</section>

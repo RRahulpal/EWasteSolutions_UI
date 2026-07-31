@@ -1,0 +1,58 @@
+﻿@page
+@model EWasteSolutions.Pages.Admin.DashboardModel
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "/Pages/Admin/Shared/_AdminLayout.cshtml";
+}
+<div class="mb-4">
+    <h2 class="fw-bold mb-1">Welcome back</h2>
+    <p class="text-muted mb-0">
+        Manage your products, categories and website activity.
+    </p>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6 col-xl-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <h6 class="text-muted">Products</h6>
+                <h2 class="fw-bold">0</h2>
+                <a href="/Admin/Products" class="text-decoration-none">
+                    Manage Products
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <h6 class="text-muted">Categories</h6>
+                <h2 class="fw-bold">0</h2>
+                <a href="/Admin/Categories" class="text-decoration-none">
+                    Manage Categories
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <h6 class="text-muted">Pickup Requests</h6>
+                <h2 class="fw-bold">0</h2>
+                <span class="text-muted">Coming soon</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <h6 class="text-muted">Enquiries</h6>
+                <h2 class="fw-bold">0</h2>
+                <span class="text-muted">Coming soon</span>
+            </div>
+        </div>
+    </div>
+</div>

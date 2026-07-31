@@ -1,0 +1,207 @@
+﻿@page "{id:int}"
+@model EWasteSolutions.Pages.Products.DetailsModel
+
+@{
+    ViewData["Title"] = Model.Product.Name;
+
+    var primaryImage =
+        Model.Product.ProductImages?
+            .FirstOrDefault(image => image.IsPrimary)
+        ?? Model.Product.ProductImages?.FirstOrDefault();
+
+    var whatsappMessage =
+        $"Hello, I am interested in {Model.Product.Name} priced at ₹{Model.Product.Price:N0}.";
+
+    var encodedMessage =
+        System.Net.WebUtility.UrlEncode(whatsappMessage);
+}
+
+<section class="product-details-page py-5">
+    <div class="container">
+
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a asp-page="/Index">Home</a>
+                </li>
+
+                <li class="breadcrumb-item">
+                    <a asp-page="/Products/Index">Products</a>
+                </li>
+
+                <li class="breadcrumb-item active"
+                    aria-current="page">
+                    @Model.Product.Name
+                </li>
+            </ol>
+        </nav>
+
+        <div class="row g-5 align-items-start">
+
+            <div class="col-lg-6">
+
+                <div class="product-details-image-wrapper">
+
+                    @if (primaryImage != null &&
+                                        !string.IsNullOrWhiteSpace(primaryImage.ImageUrl))
+                    {
+                        <img src="@primaryImage.ImageUrl"
+                             alt="@Model.Product.Name"
+                             class="product-details-image" />
+                    }
+                    else
+                    {
+                        <div class="product-details-placeholder">
+                            <i class="fa-regular fa-image fa-4x text-muted"></i>
+                        </div>
+                    }
+
+                    @if (Model.Product.IsFeatured)
+                    {
+                        <span class="badge bg-warning text-dark product-details-featured">
+                            Featured
+                        </span>
+                    }
+                </div>
+
+            </div>
+
+            <div class="col-lg-6">
+
+                <div class="mb-3">
+                    <span class="text-success fw-semibold">
+                        @(Model.Product.Category?.Name ?? "Product")
+                    </span>
+                </div>
+
+                <h1 class="fw-bold mb-3">
+                    @Model.Product.Name
+                </h1>
+
+                @if (!string.IsNullOrWhiteSpace(Model.Product.Brand))
+                {
+                    <p class="text-muted fs-5 mb-3">
+                        Brand: @Model.Product.Brand
+                    </p>
+                }
+
+                <div class="product-details-price mb-4">
+                    ₹@Model.Product.Price.ToString("N0")
+                </div>
+
+                <div class="mb-4">
+                    @if (Model.Product.Stock > 0)
+                    {
+                        <span class="badge bg-success fs-6">
+                            In Stock
+                        </span>
+
+                        <span class="text-muted ms-2">
+                            @Model.Product.Stock available
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger fs-6">
+                            Out of Stock
+                        </span>
+                    }
+                </div>
+
+                <div class="product-details-specifications mb-4">
+
+                    <h4 class="mb-3">Specifications</h4>
+
+                    <div class="specification-row">
+                        <span>Processor</span>
+                        <strong>
+                            @(string.IsNullOrWhiteSpace(Model.Product.Processor)
+                                                        ? "-"
+                                                        : Model.Product.Processor)
+                        </strong>
+                    </div>
+
+                    <div class="specification-row">
+                        <span>RAM</span>
+                        <strong>
+                            @(string.IsNullOrWhiteSpace(Model.Product.Ram)
+                                                        ? "-"
+                                                        : Model.Product.Ram)
+                        </strong>
+                    </div>
+
+                    <div class="specification-row">
+                        <span>Storage</span>
+                        <strong>
+                            @(string.IsNullOrWhiteSpace(Model.Product.Storage)
+                                                        ? "-"
+                                                        : Model.Product.Storage)
+                        </strong>
+                    </div>
+
+                    <div class="specification-row">
+                        <span>Condition</span>
+                        <strong>
+                            @(string.IsNullOrWhiteSpace(Model.Product.Condition)
+                                                        ? "-"
+                                                        : Model.Product.Condition)
+                        </strong>
+                    </div>
+
+                    <div class="specification-row">
+                        <span>Warranty</span>
+                        <strong>
+                            @(string.IsNullOrWhiteSpace(Model.Product.Warranty)
+                                                        ? "-"
+                                                        : Model.Product.Warranty)
+                        </strong>
+                    </div>
+
+                </div>
+
+                @if (!string.IsNullOrWhiteSpace(Model.Product.Description))
+                {
+                    <div class="mb-4">
+                        <h4>Description</h4>
+
+                        <p class="text-muted lh-lg">
+                            @Model.Product.Description
+                        </p>
+                    </div>
+                }
+
+                <div class="d-grid gap-3 d-sm-flex">
+
+                    @if (Model.Product.Stock > 0)
+                    {
+                        <a href="https://wa.me/919167182720?text=@encodedMessage"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="btn btn-success btn-lg flex-grow-1">
+
+                            <i class="fa-brands fa-whatsapp me-2"></i>
+                            Enquire on WhatsApp
+                        </a>
+                    }
+                    else
+                    {
+                        <button type="button"
+                                class="btn btn-secondary btn-lg flex-grow-1"
+                                disabled>
+                            Currently Unavailable
+                        </button>
+                    }
+
+                    <a asp-page="/Contact"
+                       class="btn btn-outline-dark btn-lg">
+                        Contact Us
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
